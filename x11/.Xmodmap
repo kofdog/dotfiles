@@ -1,0 +1,30 @@
+clear mod4
+remove control = Control_L
+keysym Control_L = Super_L
+keysym Super_L = Control_L
+add control = Control_L
+add mod4 = Super_L
+
+remove mod5 = Mode_switch
+remove mod1 = Alt_R
+keysym Alt_R = Mode_switch
+keysym Mode_switch = Alt_R
+add mod5 = Mode_switch
+add mod1 = Alt_R
+
+keycode 67 = XF86Back XF86Back F1 XF86Back
+keycode 68 = XF86Forward XF86Forward F2 XF86Forward
+keycode 69 = XF86Refresh XF86Refresh F3 XF86Refresh
+keycode 70 = F11 F11 F4 F11
+keycode 71 = Print Print F5 Print
+keycode 72 = XF86MonBrightnessDown XF86MonBrightnessDown F6 XF86MonBrightnessDown
+keycode 73 = XF86MonBrightnessUp XF86MonBrightnessUp F7 XF86MonBrightnessUp
+keycode 74 = XF86AudioMute XF86AudioMute F8 XF86AudioMute
+keycode 75 = XF86AudioLowerVolume XF86AudioLowerVolume F9 XF86AudioLowerVolume
+keycode 76 = XF86AudioRaiseVolume XF86AudioRaiseVolume F10 XF86AudioRaiseVolume
+
+keycode 22 = BackSpace BackSpace Delete BackSpace
+keycode 111 = Up Up Prior Up
+keycode 116 = Down Down Next Down
+keycode 113 = Left Left Home Left
+keycode 114 = Right Right End Right
