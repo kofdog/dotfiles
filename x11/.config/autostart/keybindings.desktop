@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Keybindings for Samus
+Exec=/home/kofdog/.bin/samus-keybindings.sh
+Terminal=true
+Type=Application
