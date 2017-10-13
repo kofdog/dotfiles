@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sudo modprobe -r atmel_mxt_ts
+sudo modprobe atmel_mxt_ts

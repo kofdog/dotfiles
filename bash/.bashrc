@@ -114,8 +114,8 @@ if ! shopt -oq posix; then
 fi
 
 # Set color scheme
-BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-materia.sh"
-[[ -s "$BASE16_SHELL" ]] && . "$BASE16_SHELL"
+#BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-materia.sh"
+#[[ -s "$BASE16_SHELL" ]] && . "$BASE16_SHELL"
 #source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 
 # Chrome OS-specific fixes: enable UTF-8, fix TERM
@@ -136,7 +136,13 @@ PATH=$PATH:~/android-studio/bin
 export GOPATH=~/work
 PATH=$PATH:$GOPATH/bin
 
-PATH=$PATH:~/samus/scripts/setup/brightness
+PATH=$PATH:~/.bin
+
+PATH=$PATH:~/linux-samus/scripts/setup/audio
+PATH=$PATH:~/linux-samus/scripts/setup/brightness
+PATH=$PATH:~/linux-samus/scripts/setup/keyboard
+PATH=$PATH:~/linux-samus/scripts/setup/touchpad
+PATH=$PATH:~/linux-samus/scripts/setup/xorg
 
 export PATH
 

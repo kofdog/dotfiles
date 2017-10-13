@@ -94,13 +94,19 @@ syntax on
 " Color scheme
 let base16colorspace=256
 se bg=dark
-" let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 colo base16-materia
-" colo gruvbox
-" colo quantum
-"if has("termguicolors")
-"	set termguicolors
-"endif
+if &term != "screen-256color"
+	set termguicolors
+endif
+
+" GUI stuff
+se gfn=Source\ Code\ Pro\ for\ Powerline\ Semibold\ 11
+se go-=m
+se go-=T
+se go-=r
+se go-=R
+se go-=l
+se go-=L
 
 " Remove trailing whitespace on save
 au BufWritePre * :%s/\s\+$//e

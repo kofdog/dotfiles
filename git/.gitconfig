@@ -6,6 +6,6 @@
 [core]
 	askpass =
 	excludesfile = /home/kofdog/.gitignore_global
-	editor = emacsclient -c
+	editor = vim
 [sendemail]
 	smtpserver = /usr/bin/msmtp
