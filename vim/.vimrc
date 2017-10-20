@@ -40,7 +40,7 @@ se cpt-=i
 se sta
 
 " Aesthetic
-se cc=81
+"se cc=81
 se dy+=lastline
 se lsp=0
 se noeb
@@ -80,11 +80,11 @@ se ttimeout
 se ttm=100
 
 "" Indentation adjustments
-au FileType c,cpp,make setl sw=8 ts=8 sts=0 noet cc=81 nu
-au FileType css,html,javascript setl sw=2 ts=2 et cc=81 nu
-au FileType java,xml setl sw=4 ts=4 et cc=101 nu
-au FileType haskell setl sw=4 ts=4 et cc=80 nu
-au FileType python setl sw=4 ts=4 et cc=80 nu
+au FileType c,cpp,make setl sw=8 ts=8 sts=0 noet nu "cc=81
+au FileType css,html,javascript setl sw=2 ts=2 et nu "cc=81
+au FileType java,xml setl sw=4 ts=4 et nu "cc=101
+au FileType haskell setl sw=4 ts=4 et nu "cc=80
+au FileType python setl sw=4 ts=4 et nu "cc=80
 
 " Obligatory
 filetype plugin indent on
@@ -92,12 +92,14 @@ se nocp
 syntax on
 
 " Color scheme
-let base16colorspace=256
+se t_8f=[38;2;%lu;%lu;%lum
+se t_8b=[48;2;%lu;%lu;%lum
+se t_ZH=[3m
+se t_ZR=[23m
+se termguicolors
 se bg=dark
-colo base16-materia
-if &term != "screen-256color"
-	set termguicolors
-endif
+let g:gruvbox_italic=1
+colo gruvbox
 
 " GUI stuff
 se gfn=Source\ Code\ Pro\ for\ Powerline\ Semibold\ 11
@@ -125,10 +127,6 @@ se path=$PWD/**
 se tag+=./tags
 
 " Linux kernel
-"let s:kern = system("uname -r")
-"let s:kernpath = 'se path+=/lib/modules/' . s:kern . '/build/include'
-"let s:kerncommand = substitute(s:kernpath, '\n', '', 'g')
-"exec s:kerncommand
 se path+=~/linux/include
 se path+=~/linux/arch/x86/include
 se tag+=~/linux/tags
@@ -141,9 +139,7 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline_powerline_fonts = 1
-let g:airline_theme='base16'
-" let g:airline_theme='gruvbox'
-" let g:airline_theme='quantum'
+let g:airline_theme='gruvbox'
 
 "" Android
 let g:android_sdk_tags = '$PWD/tags'
@@ -156,15 +152,6 @@ nn <c-o> :CtrlPBuffer<CR>
 
 "" Mustache/Handlebars
 au FileType html se syn=mustache
-
-"" Tmuxline
-" let g:tmuxline_preset = {
-" 	\'a'       : '#S',
-" 	\'win'     : ['#I', '#W'],
-" 	\'cwin'    : ['#I', '#W'],
-" 	\'y'       : ['%Y', '%H:%M'],
-" 	\'z'       : '#H'
-" 	\'options' : {'status-justify' : 'left'}}
 
 "" Keybindings
 " Leader key
