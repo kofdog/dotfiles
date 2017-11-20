@@ -14,6 +14,7 @@ Plugin 'mustache/vim-mustache-handlebars' " Javascript Handlebars syntax
 Plugin 'octol/vim-cpp-enhanced-highlight' " better syntax highlighting for C++
 Plugin 'othree/html5.vim'                 " syntax highlighting for HTML5
 Plugin 'pangloss/vim-javascript'          " better syntax/indent for JS
+Plugin 'tomlion/vim-solidity'             " Ethereum programming syntax
 Plugin 'tpope/vim-commentary'             " comments
 Plugin 'tpope/vim-dispatch'               " asynchronous compilation in tmux
 Plugin 'tpope/vim-fugitive'               " git integration
@@ -79,12 +80,13 @@ se sh=/bin/bash
 se ttimeout
 se ttm=100
 
-"" Indentation adjustments
+"" Filetype adjustments
 au FileType c,cpp,make setl sw=8 ts=8 sts=0 noet nu "cc=81
 au FileType css,html,javascript setl sw=2 ts=2 et nu "cc=81
 au FileType java,xml setl sw=4 ts=4 et nu "cc=101
 au FileType haskell setl sw=4 ts=4 et nu "cc=80
 au FileType python setl sw=4 ts=4 et nu "cc=80
+au FileType solidity setl sua+=.sol nu
 
 " Obligatory
 filetype plugin indent on
@@ -135,9 +137,9 @@ se path+=/usr/include
 "se tag+=/usr/include/tags
 
 "" Airline
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
 let g:airline_powerline_fonts = 1
 let g:airline_theme='gruvbox'
 
@@ -155,7 +157,7 @@ au FileType html se syn=mustache
 
 "" Keybindings
 " Leader key
-let mapleader = ";"
+let mapleader = " "
 
 " Buffer manipulation
 nn gb :bn<CR>
