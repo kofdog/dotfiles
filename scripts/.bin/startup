@@ -80,9 +80,7 @@ sudo apt install stow
 
 prettyprint "[generic] Adding placeholder directory..."
 
-if [ ! -d ${DOC_DIR} ]; then
-    mkdir -p ${DOC_DIR}
-fi
+mkdir -p "${DOC_DIR}"
 
 prettyprint "[generic] DONE"
 
