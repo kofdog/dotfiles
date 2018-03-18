@@ -86,6 +86,7 @@ au FileType css,html,javascript setl sw=2 ts=2 et nu "cc=81
 au FileType java,xml setl sw=4 ts=4 et nu "cc=101
 au FileType haskell setl sw=4 ts=4 et nu "cc=80
 au FileType python setl sw=4 ts=4 et nu "cc=80
+au FileType sh,tmux,vim setl sw=4 ts=4 et
 au FileType solidity setl sua+=.sol nu
 
 " Obligatory
