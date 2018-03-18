@@ -1,7 +1,57 @@
 #!/bin/bash
+# Pull startup configuration for a new machine
+__ScriptVersion="0.1"
 
+# constants
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'  # no Color
+
+# default values for option variables
+desktop=false
+
+# usage info
+usage() {
+  cat << EOF
+Usage: startup [-v -h] [--desktop]
+
+General options:
+
+  -v, --version  Print version number and exit.
+  -h, --help     Display this help and exit.
+
+  -d, --desktop  Include graphical components for a desktop installation
+                 (default server).
+EOF
+}
+
+# print version
+version() {
+  echo "Startup configurator -- Version $__ScriptVersion"
+}
+
+# parse options
+optspec=":dhv-:"
+while getopts "$optspec" optchar; do
+  case "${optchar}" in
+
+    # Short options
+    d) desktop=true;;
+    h) usage; exit 0;;
+    v) version; exit 0;;
+    -)
+      case "${OPTARG}" in
+        # Long options
+        desktop) desktop=true;;
+        help)    usage; exit 0;;
+        version) version; exit 0;;
+      esac;;
+    *)
+      echo "Unknown option -${OPTARG}" >&2
+      usage >&2
+      exit 1;;
+  esac
+done
+shift $((OPTIND-1))
 
 
 # generic stuff
@@ -58,6 +108,9 @@ sudo make install
 printf "${BLUE}[tmux] Cleaning up...${NC}"
 make clean
 
+printf "${BLUE}[tmux] Adding terminfo...${NC}"
+tic .config/tmux/tmux-256color.terminfo
+
 printf "${BLUE}[tmux] Installing TPM...${NC}"
 cd ~
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -92,3 +145,29 @@ make clean
 make distclean
 
 printf "${BLUE}[vim] DONE${NC}"
+
+
+if [ "$desktop" = true ]; then
+	# font
+	printf "${BLUE}[font] Pulling nerd fonts...${NC}"
+	cd ~/Documents
+	git clone https://github.com/ryanoasis/nerd-fonts.git
+	cd nerd-fonts
+
+	printf "${BLUE}[font] Installing Source Code Pro...${NC}"
+	./install.sh SourceCodePro
+
+	printf "${BLUE}[font] DONE${NC}"
+
+
+	# theme
+	printf "${BLUE}[theme] Pulling gruvbox for GNOME terminal...${NC}"
+	cd ~/Documents
+	git clone https://github.com/metalelf0/gnome-terminal-colors.git
+	cd gnome-terminal-colors
+
+	printf "${BLUE}[theme] Running interactive installer...${NC}"
+	./install.sh
+
+	printf "${BLUE}[theme] DONE. Please restart terminal and configure font.${NC}"
+fi
