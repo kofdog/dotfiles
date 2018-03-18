@@ -1,0 +1,94 @@
+#!/bin/bash
+
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+
+# generic stuff
+printf "${BLUE}[generic] Installing build tools...${NC}"
+sudo apt install build-essential
+
+printf "${BLUE}[generic] Installing git...${NC}"
+sudo apt install git
+
+printf "${BLUE}[generic] Installing GNU stow...${NC}"
+sudo apt install stow
+
+printf "${BLUE}[generic] DONE${NC}"
+
+
+# dotfiles
+printf "${BLUE}[dotfiles] Pulling...${NC}"
+cd ~
+git clone https://github.com/kofdog/dotfiles
+cd dotfiles
+
+printf "${BLUE}[dotfiles] Linking...${NC}"
+mv ~/.bashrc ~/.bashrc.old
+stow bash git scripts tmux vim
+
+printf "${BLUE}[dotfiles] DONE${NC}"
+
+
+# tmux
+printf "${BLUE}[tmux] Installing dependencies...${NC}"
+sudo apt install libevent-dev libncurses5-dev
+
+printf "${BLUE}[tmux] Pulling sources...${NC}"
+cd ~/Documents
+git clone https://github.com/tmux/tmux.git
+cd tmux
+
+printf "${BLUE}[tmux] Checking out v2.6...${NC}"
+git fetch --tags
+git checkout 2.6
+
+printf "${BLUE}[tmux] Running autogen...${NC}"
+sh autogen.sh
+
+printf "${BLUE}[tmux] Configuring...${NC}"
+./configure
+
+printf "${BLUE}[tmux] Building...${NC}"
+make -j9
+
+printf "${BLUE}[tmux] Installing...${NC}"
+sudo make install
+
+printf "${BLUE}[tmux] Cleaning up...${NC}"
+make clean
+
+printf "${BLUE}[tmux] Installing TPM...${NC}"
+cd ~
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+printf "${BLUE}[tmux] DONE${NC}"
+
+
+# vim
+printf "${BLUE}[vim] Installing dependencies...${NC}"
+sudo apt install libncurses5-dev libgnome2-dev libgnomeui-dev \
+	libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+	libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+	python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
+
+printf "${BLUE}[vim] Pulling sources...${NC}"
+cd ~/Documents
+git clone https://github.com/vim/vim.git
+cd vim
+
+printf "${BLUE}[vim] Using latest version...${NC}"
+printf "${BLUE}[vim] Configuring...${NC}"
+./configure --with-features=huge
+
+printf "${BLUE}[vim] Building...${NC}"
+make -j9
+
+printf "${BLUE}[vim] Installing...${NC}"
+sudo make install
+
+printf "${BLUE}[vim] Cleaning up...${NC}"
+make clean
+make distclean
+
+printf "${BLUE}[vim] DONE${NC}"

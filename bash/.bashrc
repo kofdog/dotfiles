@@ -138,11 +138,11 @@ PATH=$PATH:$GOPATH/bin
 
 PATH=$PATH:~/.bin
 
-PATH=$PATH:~/linux-samus/scripts/setup/audio
-PATH=$PATH:~/linux-samus/scripts/setup/brightness
-PATH=$PATH:~/linux-samus/scripts/setup/keyboard
-PATH=$PATH:~/linux-samus/scripts/setup/touchpad
-PATH=$PATH:~/linux-samus/scripts/setup/xorg
+#PATH=$PATH:~/linux-samus/scripts/setup/audio
+#PATH=$PATH:~/linux-samus/scripts/setup/brightness
+#PATH=$PATH:~/linux-samus/scripts/setup/keyboard
+#PATH=$PATH:~/linux-samus/scripts/setup/touchpad
+#PATH=$PATH:~/linux-samus/scripts/setup/xorg
 
 export PATH
 
