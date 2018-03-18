@@ -56,10 +56,10 @@ shift $((OPTIND-1))
 
 # generic stuff
 printf "${BLUE}[generic] Updating system...${NC}\n"
-sudo apt update && sudo apt upgrade
+sudo apt update && sudo apt upgrade && sudo apt autoremove
 
 printf "${BLUE}[generic] Installing build tools...${NC}\n"
-sudo apt install build-essential
+sudo apt install build-essential pkg-config
 
 printf "${BLUE}[generic] Installing git...${NC}\n"
 sudo apt install git
@@ -112,6 +112,7 @@ printf "${BLUE}[tmux] Cleaning up...${NC}\n"
 make clean
 
 printf "${BLUE}[tmux] Adding terminfo...${NC}\n"
+cd ~/dotfiles/tmux
 tic .config/tmux/tmux-256color.terminfo
 
 printf "${BLUE}[tmux] Installing TPM...${NC}\n"
