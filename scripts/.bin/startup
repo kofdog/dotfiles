@@ -3,15 +3,16 @@
 __ScriptVersion="0.1"
 
 # constants
+DOC_DIR="~/Documents"
 BLUE='\033[0;34m'
-NC='\033[0m'  # no Color
+NC='\033[0m'  # no color
 
 # default values for option variables
 desktop=false
 
-# usage info
+# print usage info
 usage() {
-  cat << EOF
+    cat << EOF
 Usage: startup [-v -h] [--desktop]
 
 General options:
@@ -26,152 +27,187 @@ EOF
 
 # print version
 version() {
-  echo "Startup configurator -- Version $__ScriptVersion"
+    echo "Startup configurator -- Version $__ScriptVersion"
 }
 
 # parse options
 optspec=":dhv-:"
 while getopts "$optspec" optchar; do
-  case "${optchar}" in
-
-    # Short options
-    d) desktop=true;;
-    h) usage; exit 0;;
-    v) version; exit 0;;
-    -)
-      case "${OPTARG}" in
-        # Long options
-        desktop) desktop=true;;
-        help)    usage; exit 0;;
-        version) version; exit 0;;
-      esac;;
-    *)
-      echo "Unknown option -${OPTARG}" >&2
-      usage >&2
-      exit 1;;
-  esac
+    case "${optchar}" in
+        # Short options
+        d) desktop=true;;
+        h) usage; exit 0;;
+        v) version; exit 0;;
+        -)
+            case "${OPTARG}" in
+                # Long options
+                desktop) desktop=true;;
+                help)    usage; exit 0;;
+                version) version; exit 0;;
+            esac;;
+        *)
+            echo "Unknown option -${OPTARG}" >&2
+            usage >&2
+            exit 1;;
+    esac
 done
 shift $((OPTIND-1))
 
+# print progress in a pretty fashion
+prettyprint() {
+    printf "${BLUE}$1${NC}\n"
+}
+
 
 # generic stuff
-printf "${BLUE}[generic] Updating system...${NC}\n"
-sudo apt update && sudo apt upgrade && sudo apt autoremove
+prettyprint "[generic] Updating system..."
 
-printf "${BLUE}[generic] Installing build tools...${NC}\n"
+sudo apt update
+sudo apt upgrade
+sudo apt autoremove
+
+prettyprint "[generic] Installing build tools..."
+
 sudo apt install build-essential pkg-config
 
-printf "${BLUE}[generic] Installing git...${NC}\n"
+prettyprint "[generic] Installing git..."
+
 sudo apt install git
 
-printf "${BLUE}[generic] Installing GNU stow...${NC}\n"
+prettyprint "[generic] Installing GNU stow..."
+
 sudo apt install stow
 
-printf "${BLUE}[generic] DONE${NC}\n"
+prettyprint "[generic] Adding placeholder directory..."
+
+if [ ! -d ${DOC_DIR} ]; then
+    mkdir -p ${DOC_DIR}
+fi
+
+prettyprint "[generic] DONE"
 
 
 # dotfiles
-printf "${BLUE}[dotfiles] Pulling...${NC}\n"
+prettyprint "[dotfiles] Pulling..."
+
 cd ~
 git clone https://github.com/kofdog/dotfiles
 cd dotfiles
 
-printf "${BLUE}[dotfiles] Linking...${NC}\n"
+prettyprint "[dotfiles] Linking..."
+
 mv ~/.bashrc ~/.bashrc.old
 stow bash git scripts tmux vim
 
-printf "${BLUE}[dotfiles] DONE${NC}\n"
+prettyprint "[dotfiles] DONE"
 
 
 # tmux
-printf "${BLUE}[tmux] Installing dependencies...${NC}\n"
+prettyprint "[tmux] Installing dependencies..."
+
 sudo apt install libevent-dev libncurses5-dev
 
-printf "${BLUE}[tmux] Pulling sources...${NC}\n"
+prettyprint "[tmux] Pulling sources..."
+
 cd ~/Documents
 git clone https://github.com/tmux/tmux.git
 cd tmux
 
-printf "${BLUE}[tmux] Checking out v2.6...${NC}\n"
+prettyprint "[tmux] Checking out v2.6..."
+
 git fetch --tags
 git checkout 2.6
 
-printf "${BLUE}[tmux] Running autogen...${NC}\n"
-sh autogen.sh
+prettyprint "[tmux] Configuring..."
 
-printf "${BLUE}[tmux] Configuring...${NC}\n"
+sh autogen.sh
 ./configure
 
-printf "${BLUE}[tmux] Building...${NC}\n"
+prettyprint "[tmux] Building..."
+
 make -j9
 
-printf "${BLUE}[tmux] Installing...${NC}\n"
+prettyprint "[tmux] Installing..."
+
 sudo make install
 
-printf "${BLUE}[tmux] Cleaning up...${NC}\n"
+prettyprint "[tmux] Cleaning up..."
+
 make clean
 
-printf "${BLUE}[tmux] Adding terminfo...${NC}\n"
+prettyprint "[tmux] Adding terminfo..."
+
 cd ~/dotfiles/tmux
 tic .config/tmux/tmux-256color.terminfo
 
-printf "${BLUE}[tmux] Installing TPM...${NC}\n"
+prettyprint "[tmux] Installing TPM..."
+
 cd ~
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-printf "${BLUE}[tmux] DONE${NC}\n"
+prettyprint "[tmux] DONE"
 
 
 # vim
-printf "${BLUE}[vim] Installing dependencies...${NC}\n"
-sudo apt install libncurses5-dev libgnome2-dev libgnomeui-dev \
-	libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-	libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
-	python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
+prettyprint "[vim] Installing dependencies..."
 
-printf "${BLUE}[vim] Pulling sources...${NC}\n"
+sudo apt install libncurses5-dev libgnome2-dev libgnomeui-dev \
+    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+    libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+    python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
+
+prettyprint "[vim] Pulling sources..."
+
 cd ~/Documents
 git clone https://github.com/vim/vim.git
 cd vim
 
-printf "${BLUE}[vim] Using latest version...${NC}\n"
-printf "${BLUE}[vim] Configuring...${NC}\n"
+prettyprint "[vim] Using latest version. Configuring..."
+
 ./configure --with-features=huge
 
-printf "${BLUE}[vim] Building...${NC}\n"
+prettyprint "[vim] Building..."
+
 make -j9
 
-printf "${BLUE}[vim] Installing...${NC}\n"
+prettyprint "[vim] Installing..."
+
 sudo make install
 
-printf "${BLUE}[vim] Cleaning up...${NC}\n"
+prettyprint "[vim] Cleaning up..."
+
 make clean
 make distclean
 
-printf "${BLUE}[vim] DONE${NC}\n"
+prettyprint "[vim] DONE"
 
 
+# graphical stuff
 if [ "$desktop" = true ]; then
-	# font
-	printf "${BLUE}[font] Pulling nerd fonts...${NC}\n"
-	cd ~/Documents
-	git clone https://github.com/ryanoasis/nerd-fonts.git
-	cd nerd-fonts
+    # font
+    prettyprint "[font] Pulling nerd fonts..."
 
-	printf "${BLUE}[font] Installing Source Code Pro...${NC}\n"
-	./install.sh SourceCodePro
+    cd ~/Documents
+    git clone https://github.com/ryanoasis/nerd-fonts.git
+    cd nerd-fonts
 
-	printf "${BLUE}[font] DONE${NC}\n"
+    prettyprint "[font] Installing Source Code Pro..."
+
+    ./install.sh SourceCodePro
+
+    prettyprint "[font] DONE"
 
 
-	# theme
-	printf "${BLUE}[theme] Pulling gruvbox for GNOME terminal...${NC}\n"
-	cd ~/Documents
-	git clone https://github.com/metalelf0/gnome-terminal-colors.git
-	cd gnome-terminal-colors
+    # theme
+    prettyprint "[theme] Pulling gruvbox for GNOME terminal..."
 
-	printf "${BLUE}[theme] Running interactive installer...${NC}\n"
-	./install.sh
+    cd ~/Documents
+    git clone https://github.com/metalelf0/gnome-terminal-colors.git
+    cd gnome-terminal-colors
 
-	printf "${BLUE}[theme] DONE. Please restart terminal and configure font.${NC}\n"
+    prettyprint "[theme] Running interactive installer..."
+
+    ./install.sh
+
+    prettyprint "[theme] DONE. Please restart terminal and configure font."
 fi
