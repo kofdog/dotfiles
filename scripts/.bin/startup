@@ -3,7 +3,7 @@
 __ScriptVersion="0.1"
 
 # constants
-DOC_DIR="~/Documents"
+DOC_DIR=~/Documents
 BLUE='\033[0;34m'
 NC='\033[0m'  # no color
 
@@ -68,7 +68,7 @@ sudo apt autoremove
 
 prettyprint "[generic] Installing build tools..."
 
-sudo apt install build-essential pkg-config
+sudo apt install automake build-essential pkg-config
 
 prettyprint "[generic] Installing git..."
 
