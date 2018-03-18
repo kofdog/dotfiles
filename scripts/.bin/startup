@@ -56,6 +56,7 @@ shift $((OPTIND-1))
 # print progress in a pretty fashion
 prettyprint() {
     printf "${BLUE}$1${NC}\n"
+    sleep 1
 }
 
 
@@ -147,7 +148,7 @@ prettyprint "[tmux] Installing TPM..."
 cd ~
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-prettyprint "[tmux] DONE"
+prettyprint "[tmux] DONE. Remember to load TPM plugins."
 
 
 # vim
@@ -190,7 +191,7 @@ mkdir ~/.vim/bundle
 cd ~/.vim/bundle
 git clone https://github.com/VundleVim/Vundle.vim
 
-prettyprint "[vim] DONE. Be sure to load Vundle plugins."
+prettyprint "[vim] DONE. Remember to load Vundle plugins."
 
 
 # graphical stuff
