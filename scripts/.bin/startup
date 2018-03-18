@@ -101,6 +101,10 @@ prettyprint "[dotfiles] DONE"
 
 
 # tmux
+prettyprint "[tmux] Removing repo version..."
+
+sudo apt remove tmux
+
 prettyprint "[tmux] Installing dependencies..."
 
 sudo apt install libevent-dev libncurses5-dev
@@ -147,6 +151,10 @@ prettyprint "[tmux] DONE"
 
 
 # vim
+prettyprint "[vim] Removing repo version..."
+
+sudo apt remove vim
+
 prettyprint "[vim] Installing dependencies..."
 
 sudo apt install libncurses5-dev libgnome2-dev libgnomeui-dev \
