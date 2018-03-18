@@ -55,119 +55,122 @@ shift $((OPTIND-1))
 
 
 # generic stuff
-printf "${BLUE}[generic] Installing build tools...${NC}"
+printf "${BLUE}[generic] Updating system...${NC}\n"
+sudo apt update && sudo apt upgrade
+
+printf "${BLUE}[generic] Installing build tools...${NC}\n"
 sudo apt install build-essential
 
-printf "${BLUE}[generic] Installing git...${NC}"
+printf "${BLUE}[generic] Installing git...${NC}\n"
 sudo apt install git
 
-printf "${BLUE}[generic] Installing GNU stow...${NC}"
+printf "${BLUE}[generic] Installing GNU stow...${NC}\n"
 sudo apt install stow
 
-printf "${BLUE}[generic] DONE${NC}"
+printf "${BLUE}[generic] DONE${NC}\n"
 
 
 # dotfiles
-printf "${BLUE}[dotfiles] Pulling...${NC}"
+printf "${BLUE}[dotfiles] Pulling...${NC}\n"
 cd ~
 git clone https://github.com/kofdog/dotfiles
 cd dotfiles
 
-printf "${BLUE}[dotfiles] Linking...${NC}"
+printf "${BLUE}[dotfiles] Linking...${NC}\n"
 mv ~/.bashrc ~/.bashrc.old
 stow bash git scripts tmux vim
 
-printf "${BLUE}[dotfiles] DONE${NC}"
+printf "${BLUE}[dotfiles] DONE${NC}\n"
 
 
 # tmux
-printf "${BLUE}[tmux] Installing dependencies...${NC}"
+printf "${BLUE}[tmux] Installing dependencies...${NC}\n"
 sudo apt install libevent-dev libncurses5-dev
 
-printf "${BLUE}[tmux] Pulling sources...${NC}"
+printf "${BLUE}[tmux] Pulling sources...${NC}\n"
 cd ~/Documents
 git clone https://github.com/tmux/tmux.git
 cd tmux
 
-printf "${BLUE}[tmux] Checking out v2.6...${NC}"
+printf "${BLUE}[tmux] Checking out v2.6...${NC}\n"
 git fetch --tags
 git checkout 2.6
 
-printf "${BLUE}[tmux] Running autogen...${NC}"
+printf "${BLUE}[tmux] Running autogen...${NC}\n"
 sh autogen.sh
 
-printf "${BLUE}[tmux] Configuring...${NC}"
+printf "${BLUE}[tmux] Configuring...${NC}\n"
 ./configure
 
-printf "${BLUE}[tmux] Building...${NC}"
+printf "${BLUE}[tmux] Building...${NC}\n"
 make -j9
 
-printf "${BLUE}[tmux] Installing...${NC}"
+printf "${BLUE}[tmux] Installing...${NC}\n"
 sudo make install
 
-printf "${BLUE}[tmux] Cleaning up...${NC}"
+printf "${BLUE}[tmux] Cleaning up...${NC}\n"
 make clean
 
-printf "${BLUE}[tmux] Adding terminfo...${NC}"
+printf "${BLUE}[tmux] Adding terminfo...${NC}\n"
 tic .config/tmux/tmux-256color.terminfo
 
-printf "${BLUE}[tmux] Installing TPM...${NC}"
+printf "${BLUE}[tmux] Installing TPM...${NC}\n"
 cd ~
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-printf "${BLUE}[tmux] DONE${NC}"
+printf "${BLUE}[tmux] DONE${NC}\n"
 
 
 # vim
-printf "${BLUE}[vim] Installing dependencies...${NC}"
+printf "${BLUE}[vim] Installing dependencies...${NC}\n"
 sudo apt install libncurses5-dev libgnome2-dev libgnomeui-dev \
 	libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
 	libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
 	python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
 
-printf "${BLUE}[vim] Pulling sources...${NC}"
+printf "${BLUE}[vim] Pulling sources...${NC}\n"
 cd ~/Documents
 git clone https://github.com/vim/vim.git
 cd vim
 
-printf "${BLUE}[vim] Using latest version...${NC}"
-printf "${BLUE}[vim] Configuring...${NC}"
+printf "${BLUE}[vim] Using latest version...${NC}\n"
+printf "${BLUE}[vim] Configuring...${NC}\n"
 ./configure --with-features=huge
 
-printf "${BLUE}[vim] Building...${NC}"
+printf "${BLUE}[vim] Building...${NC}\n"
 make -j9
 
-printf "${BLUE}[vim] Installing...${NC}"
+printf "${BLUE}[vim] Installing...${NC}\n"
 sudo make install
 
-printf "${BLUE}[vim] Cleaning up...${NC}"
+printf "${BLUE}[vim] Cleaning up...${NC}\n"
 make clean
 make distclean
 
-printf "${BLUE}[vim] DONE${NC}"
+printf "${BLUE}[vim] DONE${NC}\n"
 
 
 if [ "$desktop" = true ]; then
 	# font
-	printf "${BLUE}[font] Pulling nerd fonts...${NC}"
+	printf "${BLUE}[font] Pulling nerd fonts...${NC}\n"
 	cd ~/Documents
 	git clone https://github.com/ryanoasis/nerd-fonts.git
 	cd nerd-fonts
 
-	printf "${BLUE}[font] Installing Source Code Pro...${NC}"
+	printf "${BLUE}[font] Installing Source Code Pro...${NC}\n"
 	./install.sh SourceCodePro
 
-	printf "${BLUE}[font] DONE${NC}"
+	printf "${BLUE}[font] DONE${NC}\n"
 
 
 	# theme
-	printf "${BLUE}[theme] Pulling gruvbox for GNOME terminal...${NC}"
+	printf "${BLUE}[theme] Pulling gruvbox for GNOME terminal...${NC}\n"
 	cd ~/Documents
 	git clone https://github.com/metalelf0/gnome-terminal-colors.git
 	cd gnome-terminal-colors
 
-	printf "${BLUE}[theme] Running interactive installer...${NC}"
+	printf "${BLUE}[theme] Running interactive installer...${NC}\n"
 	./install.sh
 
-	printf "${BLUE}[theme] DONE. Please restart terminal and configure font.${NC}"
+	printf "${BLUE}[theme] DONE. Please restart terminal and configure font.${NC}\n"
 fi
