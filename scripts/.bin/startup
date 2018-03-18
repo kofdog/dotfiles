@@ -179,7 +179,12 @@ prettyprint "[vim] Cleaning up..."
 make clean
 make distclean
 
-prettyprint "[vim] DONE"
+prettyprint "[vim] Pulling Vundle..."
+mkdir ~/.vim/bundle
+cd ~/.vim/bundle
+git clone https://github.com/VundleVim/Vundle.vim
+
+prettyprint "[vim] DONE. Be sure to load Vundle plugins."
 
 
 # graphical stuff
