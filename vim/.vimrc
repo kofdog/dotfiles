@@ -101,6 +101,7 @@ se t_ZH=[3m
 se t_ZR=[23m
 se termguicolors
 se bg=dark
+let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_italic=1
 colo gruvbox
 

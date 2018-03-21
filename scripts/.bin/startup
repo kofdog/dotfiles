@@ -13,12 +13,12 @@ desktop=false
 # print usage info
 usage() {
     cat << EOF
-Usage: startup [-v -h] [--desktop]
+Usage: startup [-h -v] [--desktop]
 
 General options:
 
-  -v, --version  Print version number and exit.
   -h, --help     Display this help and exit.
+  -v, --version  Print version number and exit.
 
   -d, --desktop  Include graphical components for a desktop installation
                  (default server).
@@ -214,7 +214,8 @@ if [ "$desktop" = true ]; then
     prettyprint "[theme] Pulling gruvbox for GNOME terminal..."
 
     cd ~/Documents
-    git clone https://github.com/metalelf0/gnome-terminal-colors.git
+    # git clone https://github.com/metalelf0/gnome-terminal-colors.git
+    git clone https://github.com/kofdog/gnome-terminal-colors.git
     cd gnome-terminal-colors
 
     prettyprint "[theme] Running interactive installer..."
