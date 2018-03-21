@@ -124,6 +124,9 @@ source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 #export LANGUAGE=en_US.UTF-8
 #export TERM=xterm-256color
 
+# Firefox pixel-perfect scrolling
+export MOZ_USE_XINPUT2=1
+
 ## Path
 # Android development
 export ANDROID_HOME=~/android-sdk-linux
