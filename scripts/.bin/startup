@@ -9,6 +9,7 @@ NC='\033[0m'  # no color
 
 # default values for option variables
 desktop=false
+xps=false
 
 # print usage info
 usage() {
@@ -22,6 +23,7 @@ General options:
 
   -d, --desktop  Include graphical components for a desktop installation
                  (default server).
+  -x, --xps      Include hardware updates for the XPS 13 9360.
 EOF
 }
 
@@ -31,19 +33,21 @@ version() {
 }
 
 # parse options
-optspec=":dhv-:"
+optspec=":dhvx-:"
 while getopts "$optspec" optchar; do
     case "${optchar}" in
         # Short options
         d) desktop=true;;
         h) usage; exit 0;;
         v) version; exit 0;;
+        x) xps=true;;
         -)
             case "${OPTARG}" in
                 # Long options
                 desktop) desktop=true;;
                 help)    usage; exit 0;;
                 version) version; exit 0;;
+                xps)     xps=true;;
             esac;;
         *)
             echo "Unknown option -${OPTARG}" >&2
@@ -66,6 +70,11 @@ prettyprint "[generic] Updating system..."
 sudo apt update
 sudo apt upgrade
 sudo apt autoremove
+
+if [ "$xps" = true ]; then
+    prettyprint "[generic] Updating kernel and graphics..."
+    sudo apt install --install-recommends linux-generic-hwe-16.04 xserver-xorg-hwe-16.04
+fi
 
 prettyprint "[generic] Installing build tools..."
 
@@ -97,6 +106,10 @@ prettyprint "[dotfiles] Linking..."
 
 mv ~/.bashrc ~/.bashrc.old
 stow bash git scripts tmux vim
+
+if [ "$xps" = true ]; then
+    stow -t / xps13-9360
+fi
 
 prettyprint "[dotfiles] DONE"
 
