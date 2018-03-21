@@ -73,6 +73,8 @@ sudo apt autoremove
 
 if [ "$xps" = true ]; then
     prettyprint "[generic] Updating kernel and graphics..."
+
+    sudo apt remove dell-super-key
     sudo apt install --install-recommends linux-generic-hwe-16.04 xserver-xorg-hwe-16.04
 fi
 
