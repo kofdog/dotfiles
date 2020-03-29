@@ -186,7 +186,11 @@ cd vim
 
 prettyprint "[vim] Using latest version. Configuring..."
 
-./configure --with-features=huge
+./configure \
+    --enable-cscope \
+    --enable-perlinterp \
+    --enable-pythoninterp \
+    --with-features=huge
 
 prettyprint "[vim] Building..."
 
@@ -226,16 +230,32 @@ if [ "$desktop" = true ]; then
 
 
     # theme
-    prettyprint "[theme] Pulling gruvbox for GNOME terminal..."
+    prettyprint "[theme] Pulling base16 for GNOME terminal..."
 
     cd ~/Documents
-    # git clone https://github.com/metalelf0/gnome-terminal-colors.git
-    git clone https://github.com/kofdog/gnome-terminal-colors.git
-    cd gnome-terminal-colors
+    git clone https://github.com/aaron-williamson/base16-gnome-terminal.git
+    cd base16-gnome-terminal
 
-    prettyprint "[theme] Running interactive installer..."
+    prettyprint "[theme] Running installer for gruvbox-dark-hard..."
 
-    ./install.sh
+    ./color-scripts/base16-gruvbox-dark-hard-256.sh
+
+    prettyprint "[theme] Pulling base16-shell..."
+
+    cd ~/Documents
+    git clone https://github.com/chriskempson/base16-shell.git
 
     prettyprint "[theme] DONE. Please restart terminal and configure font."
+    # prettyprint "[theme] Pulling gruvbox for GNOME terminal..."
+
+    # cd ~/Documents
+    # # git clone https://github.com/metalelf0/gnome-terminal-colors.git
+    # git clone https://github.com/kofdog/gnome-terminal-colors.git
+    # cd gnome-terminal-colors
+
+    # prettyprint "[theme] Running interactive installer..."
+
+    # ./install.sh
+
+    # prettyprint "[theme] DONE. Please restart terminal and configure font."
 fi
