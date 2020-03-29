@@ -18,7 +18,7 @@ Plugin 'skywind3000/asyncrun.vim'         " asynchronous shell commands
 Plugin 'tomlion/vim-solidity'             " Ethereum programming syntax
 Plugin 'tpope/vim-commentary'             " comments
 "Plugin 'tpope/vim-dispatch'               " asynchronous compilation in tmux
-"Plugin 'tpope/vim-fugitive'               " git integration
+Plugin 'tpope/vim-fugitive'               " git integration
 Plugin 'tpope/vim-obsession'              " make persistent sessions
 "Plugin 'tyrannicaltoucan/vim-quantum'     " colors
 "Plugin 'vhdirk/vim-cmake'                 " cmake integration
@@ -160,7 +160,7 @@ let g:ctrlp_show_hidden = 1
 nn <c-n> :CtrlPBuffer<CR>
 
 "" AsyncRun
-let g:asyncrun_open = 6
+let g:asyncrun_open = 10
 
 "" Mustache/Handlebars
 "au FileType html se syn=mustache
@@ -174,9 +174,18 @@ nn gb :bn<CR>
 nn gB :bp<CR>
 nn <Leader>bd :b#\|bd#<CR>
 
-" Build
+" Quickfix
 " q: toggle quickfix
-nn <Leader>q :call asyncrun#quickfix_toggle(6)<CR>
+"nn <Leader>qq :call asyncrun#quickfix_toggle(10)<CR>
+" o: (open) jump to quickfix if exists
+nn <Leader>qo :cw<CR>
+" q: close quickfix
+nn <Leader>qq :ccl<CR>
+" n/p: cycle next/previous quickfix
+nn <Leader>qn :cnewer<CR>
+nn <Leader>qp :colder<CR>
+
+" Build
 " f: make single file
 nn <Leader>mf :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"<CR>
 " l: make local (current directory)
@@ -204,6 +213,12 @@ nn <leader>fe :exec("cs find e ".expand("<cword>"))<CR>
 nn <leader>ff :exec("cs find f ".expand("<cword>"))<CR>
 " i: Find files #including this file
 nn <leader>fi :exec("cs find i ".expand("<cword>"))<CR>
+
+" git
+nn <leader>gc :G commit -a<CR>
+nn <leader>gd :G diff -b --ignore-blank-lines<CR>
+nn <leader>gg :exec("G grep ".expand("<cword>"))<CR><CR><CR>
+nn <leader>gl :G log<CR>
 
 " Exit Insert mode
 im jk <Esc>
