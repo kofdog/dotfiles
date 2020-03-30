@@ -132,15 +132,19 @@ se noswf
 " Project workspace
 se path=$PWD/**
 se tag+=./tags
+se nocst
+silent! cs add cscope.out
+:se csqf=s-,c-,d-,i-,t-,e-,a-
+:se csre
 
 " Linux kernel
 se path+=~/linux/include
 se path+=~/linux/arch/x86/include
 se tag+=~/linux/tags
-se cst
 
 se path+=/usr/include
-"se tag+=/usr/include/tags
+se tag+=/usr/include/pcl-1.7/pcl/tags
+silent! cs add /usr/include/pcl-1.7/pcl/cscope.out
 
 "" Airline
 let g:airline#extensions#tabline#enabled = 0
@@ -194,6 +198,10 @@ nn <Leader>ml :AsyncRun -cwd="$(VIM_FILEDIR)" make<CR>
 nn <Leader>ma :AsyncRun -cwd=<root> make<CR>
 " c: make all (cmake project)
 nn <Leader>mc :AsyncRun -cwd=<root>/build make<CR>
+" r: run main project binary, requires 'run' target defined in Makefile
+nn <silent> <Leader>mr :AsyncRun -cwd=<root> -raw make run<CR>:ccl<CR>
+" m: run (cmake project)
+nn <silent> <Leader>mm :AsyncRun -cwd=<root>/build -raw make run<CR>:ccl<CR>
 
 " ctags/cscope
 nn <Leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
@@ -219,10 +227,10 @@ nn <leader>gc :G commit -a<CR>
 nn <leader>gd :G diff -b --ignore-blank-lines<CR>
 nn <leader>gg :exec("G grep ".expand("<cword>"))<CR><CR><CR>
 nn <leader>gl :G log<CR>
+nn <leader>gs :G<CR>
 
 " Exit Insert mode
 im jk <Esc>
 
 " Source per-project configuration
 silent! so .vimlocal
-silent! cs add cscope.out
