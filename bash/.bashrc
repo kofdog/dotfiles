@@ -129,17 +129,17 @@ export MOZ_USE_XINPUT2=1
 
 ## Path
 # Android development
-export ANDROID_HOME=~/android-sdk-linux
+export ANDROID_HOME=$HOME/android-sdk-linux
 PATH=$PATH:$ANDROID_HOME/platform-tools
 PATH=$PATH:$ANDROID_HOME/tools
 PATH=$PATH:$ANDROID_HOME/tools/bin
-PATH=$PATH:~/android-studio/bin
+PATH=$PATH:$HOME/android-studio/bin
 
 # Go
-export GOPATH=~/work
+export GOPATH=$HOME/work
 PATH=$PATH:$GOPATH/bin
 
-PATH=$PATH:~/.bin
+PATH=$PATH:$HOME/.bin
 
 #PATH=$PATH:~/linux-samus/scripts/setup/audio
 #PATH=$PATH:~/linux-samus/scripts/setup/brightness
@@ -154,3 +154,10 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
 export EDITOR=vim
 
 unset SSH_ASKPASS
+
+export PATH="$HOME/.solc-select:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
